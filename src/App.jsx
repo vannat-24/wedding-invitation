@@ -236,7 +236,7 @@ export default function App() {
           />
 
           {/* 2. INVITATION DETAILS CONTAINER (Padding & Sections) */}
-          <div className="px-4 sm:px-5 pt-4 pb-28 space-y-7 bg-parchment relative z-10">
+          <div className="px-4 sm:px-5 pt-4 pb-12 sm:pb-14 space-y-7 bg-parchment relative z-10">
             {/* Formal Invitation Card with Parents' blessings */}
             <CoverSection data={weddingData} lang={lang} onToast={showToast} />
 
@@ -279,7 +279,7 @@ export default function App() {
             <GiftSection banking={weddingData.banking} lang={lang} onToast={showToast} />
 
             {/* Wedding Gratitude & Creator Showcase Footer (បង្ហាញពីស្នាដៃអ្នករៀបរាង) */}
-            <footer className="pt-2 pb-8 px-3 flex flex-col items-center text-center space-y-4 select-none">
+            <footer className="pt-1 pb-2 px-3 flex flex-col items-center text-center space-y-3 select-none">
               {/* Sincere Gratitude */}
               <div className="space-y-1">
                 <span className="font-moul text-sm sm:text-base gold-gradient-text block">
@@ -353,7 +353,7 @@ export default function App() {
 
                   {/* Facebook */}
                   <a
-                    href={weddingData.creator?.facebookUrl || 'https://www.facebook.com/search/top?q=Ka%20van'}
+                    href={weddingData.creator?.facebookUrl || 'https://web.facebook.com/sivvannat'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl bg-white/90 hover:bg-amber-50 border border-amber-300/70 text-[10px] font-kantumruy text-amber-950 transition active:scale-95 shadow-2xs group col-span-2 justify-center"

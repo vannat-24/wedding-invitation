@@ -83,7 +83,7 @@ export const weddingData = {
     phone: "010272190",
     phoneDisplay: "010 272 190",
     facebook: "Ka van",
-    facebookUrl: "https://www.facebook.com/search/top?q=Ka%20van",
+    facebookUrl: "https://web.facebook.com/sivvannat",
     telegram: "@sivvannat",
     telegramUrl: "https://t.me/sivvannat",
     year: "2026",
