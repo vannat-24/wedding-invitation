@@ -1,15 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 
-export default function GallerySection({ gallery, lang }) {
+export default function GallerySection({ gallery, lang, onLightboxChange }) {
   const [selectedPhoto, setSelectedPhoto] = useState(null)
   const touchStartX = useRef(null)
 
   const openLightbox = (photo) => {
     setSelectedPhoto(photo)
+    onLightboxChange?.(true)
   }
 
   const closeLightbox = () => {
     setSelectedPhoto(null)
+    onLightboxChange?.(false)
   }
 
   const navigatePhoto = (direction, e) => {
@@ -118,94 +120,99 @@ export default function GallerySection({ gallery, lang }) {
           : 'Tap any photo to view full size'}
       </p>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Modal (Centered with buttons framed directly around the photo) */}
       {selectedPhoto && (
         <div
-          className="fixed inset-0 z-50 bg-black/95 flex flex-col justify-between items-center p-4 backdrop-blur-md animate-fade-in select-none"
+          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-2 sm:p-4 backdrop-blur-md animate-fade-in select-none"
           onClick={closeLightbox}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {/* Top Bar with Counter & Close Button (Generous margins off the top & right edges) */}
-          <div className="w-full flex justify-between items-center pt-3 px-2 sm:pt-5 sm:px-6 z-50">
-            {/* Photo Counter Badge */}
-            <div className="bg-black/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-amber-400/60 shadow-xl flex items-center space-x-1.5 text-amber-200">
-              <i className="fa-regular fa-image text-xs text-amber-300"></i>
-              <span className="text-xs font-bold font-kantumruy">
-                {currentPhotoIndex + 1} / {gallery.length}
-              </span>
+          {/* Centered Mobile/Photo Frame: Keeps Cross, Left, Right & Counter attached right near the photo! */}
+          <div
+            className="relative w-full max-w-[430px] sm:max-w-[460px] h-full max-h-[920px] flex flex-col justify-between items-center py-4 px-2 select-none"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Bar with Counter & Close Button (Directly above the photo) */}
+            <div className="w-full flex justify-between items-center px-1 z-50">
+              {/* Photo Counter Badge */}
+              <div className="bg-black/75 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-amber-400/60 shadow-xl flex items-center space-x-1.5 text-amber-200">
+                <i className="fa-regular fa-image text-xs text-amber-300"></i>
+                <span className="text-xs font-bold font-kantumruy">
+                  {currentPhotoIndex + 1} / {gallery.length}
+                </span>
+              </div>
+
+              {/* Close Button ("Cross X") with generous margins and gold-rimmed styling */}
+              <button
+                onClick={closeLightbox}
+                className="w-11 h-11 rounded-full bg-black/80 hover:bg-black/95 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-xl shadow-[0_4px_25px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all cursor-pointer group"
+                title={lang === 'km' ? 'បិទ' : 'Close'}
+                aria-label="Close photo"
+              >
+                <i className="fa-solid fa-xmark group-hover:rotate-90 transition-transform duration-200"></i>
+              </button>
             </div>
 
-            {/* Close Button ("Cross X") with generous margin off top-right edges */}
-            <button
-              onClick={closeLightbox}
-              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/75 hover:bg-black/95 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-xl shadow-[0_4px_25px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all cursor-pointer group"
-              title={lang === 'km' ? 'បិទ' : 'Close'}
-              aria-label="Close photo"
-            >
-              <i className="fa-solid fa-xmark group-hover:rotate-90 transition-transform duration-200"></i>
-            </button>
-          </div>
+            {/* Middle Section: Left Arrow + Image + Right Arrow */}
+            <div className="relative w-full flex-1 flex items-center justify-center my-auto">
+              {/* Left Arrow Navigation Button (Attached to left flank of photo container) */}
+              <button
+                onClick={(e) => navigatePhoto(-1, e)}
+                className="absolute left-0 sm:left-1 top-1/2 -translate-y-1/2 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/80 hover:bg-black/95 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-lg shadow-[0_4px_25px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all cursor-pointer group"
+                title={lang === 'km' ? 'រូបភាពមុន' : 'Previous'}
+                aria-label="Previous photo"
+              >
+                <i className="fa-solid fa-chevron-left group-hover:-translate-x-0.5 transition-transform duration-200"></i>
+              </button>
 
-          {/* Left Arrow Navigation Button (Generous margin off left edge & image) */}
-          <button
-            onClick={(e) => navigatePhoto(-1, e)}
-            className="absolute left-3 sm:left-6 md:left-10 top-1/2 -translate-y-1/2 z-50 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/75 hover:bg-black/95 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-lg sm:text-xl shadow-[0_4px_25px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all cursor-pointer group"
-            title={lang === 'km' ? 'រូបភាពមុន' : 'Previous'}
-            aria-label="Previous photo"
-          >
-            <i className="fa-solid fa-chevron-left group-hover:-translate-x-0.5 transition-transform duration-200"></i>
-          </button>
+              {/* Right Arrow Navigation Button (Attached to right flank of photo container) */}
+              <button
+                onClick={(e) => navigatePhoto(1, e)}
+                className="absolute right-0 sm:right-1 top-1/2 -translate-y-1/2 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/80 hover:bg-black/95 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-lg shadow-[0_4px_25px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all cursor-pointer group"
+                title={lang === 'km' ? 'រូបភាពបន្ទាប់' : 'Next'}
+                aria-label="Next photo"
+              >
+                <i className="fa-solid fa-chevron-right group-hover:translate-x-0.5 transition-transform duration-200"></i>
+              </button>
 
-          {/* Right Arrow Navigation Button (Generous margin off right edge & image) */}
-          <button
-            onClick={(e) => navigatePhoto(1, e)}
-            className="absolute right-3 sm:right-6 md:right-10 top-1/2 -translate-y-1/2 z-50 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/75 hover:bg-black/95 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-lg sm:text-xl shadow-[0_4px_25px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all cursor-pointer group"
-            title={lang === 'km' ? 'រូបភាពបន្ទាប់' : 'Next'}
-            aria-label="Next photo"
-          >
-            <i className="fa-solid fa-chevron-right group-hover:translate-x-0.5 transition-transform duration-200"></i>
-          </button>
+              {/* Photo & Caption Container with dedicated side margins so buttons never overlap image */}
+              <div className="w-full px-12 sm:px-14 flex flex-col items-center">
+                <img
+                  src={selectedPhoto.full}
+                  alt={lang === 'km' ? selectedPhoto.captionKh : selectedPhoto.captionEn}
+                  className="w-full max-h-[64vh] sm:max-h-[68vh] object-contain rounded-2xl border-2 border-amber-400/90 shadow-[0_12px_45px_rgba(0,0,0,0.95)] bg-neutral-900/60"
+                />
+                <p className="text-amber-100 text-xs sm:text-sm font-kantumruy font-medium mt-3 text-center bg-black/75 px-4 py-1.5 rounded-full border border-amber-400/40 shadow-lg max-w-[95%] truncate">
+                  {lang === 'km' ? selectedPhoto.captionKh : selectedPhoto.captionEn}
+                </p>
+              </div>
+            </div>
 
-          {/* Large Image Container with safe padding corridors on left and right */}
-          <div
-            className="my-auto px-12 sm:px-18 max-w-[440px] sm:max-w-[480px] w-full flex flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={selectedPhoto.full}
-              alt={lang === 'km' ? selectedPhoto.captionKh : selectedPhoto.captionEn}
-              className="w-full max-h-[68vh] sm:max-h-[72vh] object-contain rounded-2xl border-2 border-amber-400/90 shadow-[0_10px_40px_rgba(0,0,0,0.9)] bg-neutral-900/50"
-            />
-            <p className="text-amber-100 text-xs sm:text-sm font-kantumruy font-medium mt-3 text-center bg-black/70 px-4 py-1.5 rounded-full border border-amber-400/40 shadow-lg">
-              {lang === 'km' ? selectedPhoto.captionKh : selectedPhoto.captionEn}
-            </p>
-          </div>
+            {/* Bottom Quick Navigation Toolbar (Directly under the photo) */}
+            <div className="w-full flex justify-center items-center pb-2 z-50">
+              <div className="flex items-center space-x-3 bg-black/75 backdrop-blur-md px-4 py-1.5 rounded-full border border-amber-400/50 shadow-lg">
+                <button
+                  onClick={(e) => navigatePhoto(-1, e)}
+                  className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-amber-200 text-xs font-kantumruy flex items-center space-x-1.5 transition cursor-pointer"
+                >
+                  <i className="fa-solid fa-arrow-left text-[10px]"></i>
+                  <span>{lang === 'km' ? 'ថយក្រោយ' : 'Prev'}</span>
+                </button>
 
-          {/* Bottom Quick Navigation Toolbar (Clean bottom margin for easy thumb access) */}
-          <div
-            className="pb-3 sm:pb-5 z-50 flex items-center space-x-3"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={(e) => navigatePhoto(-1, e)}
-              className="px-4 py-1.5 rounded-full bg-black/70 hover:bg-black/90 active:scale-95 border border-amber-400/60 text-amber-200 text-xs font-kantumruy flex items-center space-x-1.5 shadow-md transition cursor-pointer"
-            >
-              <i className="fa-solid fa-arrow-left text-[11px]"></i>
-              <span>{lang === 'km' ? 'ថយក្រោយ' : 'Prev'}</span>
-            </button>
+                <span className="text-xs text-amber-300 font-bold font-kantumruy">
+                  {currentPhotoIndex + 1} / {gallery.length}
+                </span>
 
-            <span className="text-[11px] text-amber-300/80 font-kantumruy">
-              {currentPhotoIndex + 1} / {gallery.length}
-            </span>
-
-            <button
-              onClick={(e) => navigatePhoto(1, e)}
-              className="px-4 py-1.5 rounded-full bg-black/70 hover:bg-black/90 active:scale-95 border border-amber-400/60 text-amber-200 text-xs font-kantumruy flex items-center space-x-1.5 shadow-md transition cursor-pointer"
-            >
-              <span>{lang === 'km' ? 'បន្ទាប់' : 'Next'}</span>
-              <i className="fa-solid fa-arrow-right text-[11px]"></i>
-            </button>
+                <button
+                  onClick={(e) => navigatePhoto(1, e)}
+                  className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-amber-200 text-xs font-kantumruy flex items-center space-x-1.5 transition cursor-pointer"
+                >
+                  <span>{lang === 'km' ? 'បន្ទាប់' : 'Next'}</span>
+                  <i className="fa-solid fa-arrow-right text-[10px]"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

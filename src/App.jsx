@@ -63,6 +63,7 @@ export default function App() {
   const [isPlayingMusic, setIsPlayingMusic] = useState(false)
   const [envelopeState, setEnvelopeState] = useState('closed') // 'closed', 'opening', 'opened'
   const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [isPhotoViewing, setIsPhotoViewing] = useState(false)
   const scrollBodyRef = useRef(null)
 
   const showToast = (message) => {
@@ -143,75 +144,77 @@ export default function App() {
         <div className="absolute inset-0 khmer-pattern-bg opacity-40 pointer-events-none z-0"></div>
 
         {/* Ambient Gold Dust Particles */}
-        <AmbientGoldDust />
+        {!isPhotoViewing && <AmbientGoldDust />}
 
         {/* Traditional Khmer Corner Ornaments (Fixed Frame) */}
-        <OrnamentCorners />
+        {!isPhotoViewing && <OrnamentCorners />}
 
         {/* Top Floating Header Action Bar */}
-        <header
-          className="absolute top-0 inset-x-0 z-40 pt-4 px-5 flex justify-between items-center w-full pointer-events-auto"
-          data-purpose="top-action-bar"
-        >
-          {/* Re-seal Envelope Button & Status Pill */}
-          <div className="flex items-center space-x-1.5">
-            <button
-              onClick={handleCloseEnvelope}
-              className="h-8 px-2.5 rounded-full bg-black/45 hover:bg-black/65 backdrop-blur-md border border-amber-300/80 shadow-md flex items-center justify-center space-x-1.5 active:scale-95 transition cursor-pointer text-amber-100 text-xs font-semibold"
-              title={lang === 'km' ? 'មើលមុខសំបុត្រឡើងវិញ' : 'View Envelope Cover'}
-            >
-              <span>💌</span>
-              <span className="text-[10px] font-kantumruy">
-                {lang === 'km' ? 'មុខសំបុត្រ' : 'Cover'}
-              </span>
-            </button>
+        {!isPhotoViewing && (
+          <header
+            className="absolute top-0 inset-x-0 z-40 pt-4 px-5 flex justify-between items-center w-full pointer-events-auto"
+            data-purpose="top-action-bar"
+          >
+            {/* Re-seal Envelope Button & Status Pill */}
+            <div className="flex items-center space-x-1.5">
+              <button
+                onClick={handleCloseEnvelope}
+                className="h-8 px-2.5 rounded-full bg-black/45 hover:bg-black/65 backdrop-blur-md border border-amber-300/80 shadow-md flex items-center justify-center space-x-1.5 active:scale-95 transition cursor-pointer text-amber-100 text-xs font-semibold"
+                title={lang === 'km' ? 'មើលមុខសំបុត្រឡើងវិញ' : 'View Envelope Cover'}
+              >
+                <span>💌</span>
+                <span className="text-[10px] font-kantumruy">
+                  {lang === 'km' ? 'មុខសំបុត្រ' : 'Cover'}
+                </span>
+              </button>
 
-            <div className="hidden xs:flex items-center space-x-1.5 bg-black/45 backdrop-blur-md border border-amber-300/80 px-2 py-1 rounded-full shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="text-[9.5px] font-semibold text-amber-200 tracking-wider">
-                {lang === 'km' ? 'សិរីសួស្តី' : 'Union'}
-              </span>
+              <div className="hidden xs:flex items-center space-x-1.5 bg-black/45 backdrop-blur-md border border-amber-300/80 px-2 py-1 rounded-full shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="text-[9.5px] font-semibold text-amber-200 tracking-wider">
+                  {lang === 'km' ? 'សិរីសួស្តី' : 'Union'}
+                </span>
+              </div>
             </div>
-          </div>
 
-          {/* Controls: Music & Language Switcher */}
-          <div className="flex items-center space-x-2">
-            {/* Audio Toggle & Track Switcher with User's songs */}
-            <AudioPlayer
-              musicData={weddingData.music}
-              lang={lang}
-              onToast={showToast}
-              isPlaying={isPlayingMusic}
-              setIsPlaying={setIsPlayingMusic}
-            />
+            {/* Controls: Music & Language Switcher */}
+            <div className="flex items-center space-x-2">
+              {/* Audio Toggle & Track Switcher with User's songs */}
+              <AudioPlayer
+                musicData={weddingData.music}
+                lang={lang}
+                onToast={showToast}
+                isPlaying={isPlayingMusic}
+                setIsPlaying={setIsPlayingMusic}
+              />
 
-            {/* Language Toggle */}
-            <button
-              onClick={toggleLanguage}
-              className="h-8 px-2.5 rounded-full bg-white/95 shadow-md border border-amber-300 flex items-center justify-center space-x-1.5 hover:bg-amber-50 active:scale-95 transition cursor-pointer"
-              title={lang === 'km' ? 'ប្តូរជាភាសាអង់គ្លេស' : 'Switch to Khmer'}
-            >
-              {lang === 'km' ? (
-                // Cambodia Flag
-                <svg className="w-4 h-3 rounded-xs shadow-inner" viewBox="0 0 900 600">
-                  <rect fill="#032ea1" height="600" width="900"></rect>
-                  <rect fill="#e00025" height="300" width="900" y="150"></rect>
-                  <g fill="#fff">
-                    <path d="M450,210 L457,235 L443,235 Z M420,230 L425,245 L415,245 Z M480,230 L485,245 L475,245 Z"></path>
-                    <rect height="35" width="80" x="410" y="245"></rect>
-                    <rect height="30" width="140" x="380" y="275"></rect>
-                  </g>
-                </svg>
-              ) : (
-                // English Flag Icon
-                <span className="text-xs">🇬🇧</span>
-              )}
-              <span className="text-[10px] font-bold text-amber-950 font-kantumruy">
-                {lang === 'km' ? 'KH' : 'EN'}
-              </span>
-            </button>
-          </div>
-        </header>
+              {/* Language Toggle */}
+              <button
+                onClick={toggleLanguage}
+                className="h-8 px-2.5 rounded-full bg-white/95 shadow-md border border-amber-300 flex items-center justify-center space-x-1.5 hover:bg-amber-50 active:scale-95 transition cursor-pointer"
+                title={lang === 'km' ? 'ប្តូរជាភាសាអង់គ្លេស' : 'Switch to Khmer'}
+              >
+                {lang === 'km' ? (
+                  // Cambodia Flag
+                  <svg className="w-4 h-3 rounded-xs shadow-inner" viewBox="0 0 900 600">
+                    <rect fill="#032ea1" height="600" width="900"></rect>
+                    <rect fill="#e00025" height="300" width="900" y="150"></rect>
+                    <g fill="#fff">
+                      <path d="M450,210 L457,235 L443,235 Z M420,230 L425,245 L415,245 Z M480,230 L485,245 L475,245 Z"></path>
+                      <rect height="35" width="80" x="410" y="245"></rect>
+                      <rect height="30" width="140" x="380" y="275"></rect>
+                    </g>
+                  </svg>
+                ) : (
+                  // English Flag Icon
+                  <span className="text-xs">🇬🇧</span>
+                )}
+                <span className="text-[10px] font-bold text-amber-950 font-kantumruy">
+                  {lang === 'km' ? 'KH' : 'EN'}
+                </span>
+              </button>
+            </div>
+          </header>
+        )}
 
         {/* Continuous Scroll Content Container */}
         <div
@@ -249,7 +252,11 @@ export default function App() {
             <SectionDivider />
 
             {/* Pre-Wedding Photo Gallery with Lightbox */}
-            <GallerySection gallery={weddingData.gallery} lang={lang} />
+            <GallerySection
+              gallery={weddingData.gallery}
+              lang={lang}
+              onLightboxChange={setIsPhotoViewing}
+            />
 
             <SectionDivider />
 
@@ -279,8 +286,10 @@ export default function App() {
           </div>
         </div>
 
-        {/* Floating Bottom Navigation Dock */}
-        <FloatingDock lang={lang} onScrollTo={scrollToAnchor} />
+        {/* Floating Bottom Navigation Dock (Hidden when viewing photo lightbox) */}
+        {!isPhotoViewing && (
+          <FloatingDock lang={lang} onScrollTo={scrollToAnchor} />
+        )}
       </main>
     </div>
   )
