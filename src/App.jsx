@@ -300,42 +300,69 @@ export default function App() {
               </div>
 
               {/* Creator Showcase Card (ស្នាដៃអ្នករៀបរាង) */}
-              <div className="w-full max-w-[340px] bg-gradient-to-b from-[#fffef8] via-[#fdf8eb] to-[#fbf2dd] rounded-2xl p-3.5 border border-amber-300 shadow-[0_6px_20px_rgba(212,175,55,0.2)] flex flex-col items-center space-y-2">
-                <div className="inline-flex items-center space-x-1.5 px-3 py-0.5 rounded-full bg-amber-100/80 border border-amber-300/60 text-[10px] font-bold text-amber-950 font-kantumruy">
+              <div className="w-full max-w-[340px] bg-gradient-to-b from-[#fffef8] via-[#fdf8eb] to-[#fbf2dd] rounded-2xl p-4 border border-amber-300 shadow-[0_6px_20px_rgba(212,175,55,0.2)] flex flex-col items-center space-y-2.5">
+                {/* Header Tag */}
+                <div className="inline-flex items-center space-x-1.5 px-3 py-0.5 rounded-full bg-amber-100/90 border border-amber-300/70 text-[10px] font-bold text-amber-950 font-kantumruy">
                   <span className="text-amber-600">✨</span>
                   <span>{lang === 'km' ? 'ស្នាដៃរៀបរៀង និងរចនាដោយ' : 'Crafted & Designed by'}</span>
                   <span className="text-amber-600">✨</span>
                 </div>
 
-                <div className="flex items-center space-x-2.5 py-1">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-700 via-amber-500 to-amber-300 p-[1.5px] shadow-sm shrink-0">
-                    <div className="w-full h-full rounded-full bg-[#3d2406] flex items-center justify-center text-amber-200 font-serif font-bold text-sm">
-                      V
-                    </div>
+                {/* Profile Header: Small circular avatar & Name */}
+                <div className="flex items-center space-x-3 py-1">
+                  {/* Small Profile Avatar Image */}
+                  <div className="relative w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-amber-600 via-amber-400 to-amber-200 shadow-md shrink-0">
+                    <img
+                      src={weddingData.creator?.avatar || '/images/creator/vannat.jpg'}
+                      alt="Mr Vannat"
+                      className="w-full h-full object-cover rounded-full"
+                    />
                   </div>
+
                   <div className="text-left">
-                    <p className="font-moul text-[13px] text-[#54380a] leading-tight">
-                      {lang === 'km' ? weddingData.creator?.nameKh || 'វណ្ណាត់ (Vannat)' : weddingData.creator?.nameEn || 'Vannat'}
+                    <p className="font-moul text-[14px] text-[#54380a] leading-tight">
+                      {weddingData.creator?.name || 'Mr Vannat'}
                     </p>
-                    <p className="text-[9.5px] text-amber-900/80 font-kantumruy">
-                      {lang === 'km' ? weddingData.creator?.roleKh || 'អ្នករៀបចំ និងអភិវឌ្ឍន៍ធៀបការអេឡិចត្រូនិក' : weddingData.creator?.roleEn || 'Digital Wedding Invitation Developer'}
+                    <p className="text-[10px] text-amber-900/80 font-kantumruy font-medium mt-0.5">
+                      {lang === 'km' ? weddingData.creator?.roleKh : weddingData.creator?.roleEn}
                     </p>
                   </div>
                 </div>
 
-                {/* Creator Repository Link Badge */}
-                <a
-                  href="https://github.com/vannat-24/wedding-invitation"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-900/10 hover:bg-amber-900/20 border border-amber-600/30 text-amber-950 text-[10px] font-medium font-kantumruy transition active:scale-95 cursor-pointer shadow-xs"
-                >
-                  <i className="fa-brands fa-github text-xs text-amber-900"></i>
-                  <span className="font-semibold">vannat-24</span>
-                  <span className="text-amber-600">•</span>
-                  <span className="text-amber-800 text-[9px]">Wedding Invitation Repo</span>
-                  <i className="fa-solid fa-arrow-up-right-from-square text-[8px] text-amber-700 ml-0.5"></i>
-                </a>
+                {/* Contact Links Grid (Phone, Telegram, Facebook) */}
+                <div className="w-full grid grid-cols-2 gap-1.5 pt-1">
+                  {/* Phone */}
+                  <a
+                    href={`tel:${weddingData.creator?.phone || '010272190'}`}
+                    className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl bg-white/90 hover:bg-amber-50 border border-amber-300/70 text-[10px] font-kantumruy text-amber-950 transition active:scale-95 shadow-2xs group"
+                  >
+                    <i className="fa-solid fa-phone text-emerald-600 text-[10px] group-hover:scale-110 transition-transform"></i>
+                    <span className="font-semibold truncate">{weddingData.creator?.phoneDisplay || '010 272 190'}</span>
+                  </a>
+
+                  {/* Telegram */}
+                  <a
+                    href={weddingData.creator?.telegramUrl || 'https://t.me/sivvannat'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl bg-white/90 hover:bg-amber-50 border border-amber-300/70 text-[10px] font-kantumruy text-amber-950 transition active:scale-95 shadow-2xs group"
+                  >
+                    <i className="fa-brands fa-telegram text-sky-500 text-[11px] group-hover:scale-110 transition-transform"></i>
+                    <span className="font-semibold truncate">{weddingData.creator?.telegram || '@sivvannat'}</span>
+                  </a>
+
+                  {/* Facebook */}
+                  <a
+                    href={weddingData.creator?.facebookUrl || 'https://www.facebook.com/search/top?q=Ka%20van'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl bg-white/90 hover:bg-amber-50 border border-amber-300/70 text-[10px] font-kantumruy text-amber-950 transition active:scale-95 shadow-2xs group col-span-2 justify-center"
+                  >
+                    <i className="fa-brands fa-facebook text-blue-600 text-[11px] group-hover:scale-110 transition-transform"></i>
+                    <span className="font-semibold">{weddingData.creator?.facebook || 'Ka van'}</span>
+                    <span className="text-[9px] text-amber-700/80 font-normal">(Facebook)</span>
+                  </a>
+                </div>
 
                 {/* Copyright Dedication */}
                 <p className="text-[8.5px] text-amber-900/60 font-kantumruy pt-1 border-t border-amber-200/60 w-full text-center">
