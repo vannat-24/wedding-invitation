@@ -60,16 +60,28 @@ export const weddingData = {
       {
         id: "mchas-besdong",
         title: "ម្ចាស់បេះដូង",
-        artist: "Traditional Wedding Song",
+        artistKh: "បទមង្គលការប្រពៃណីខ្មែរ",
+        artistEn: "Traditional Khmer Wedding Song",
+        cover: "/images/gallery/photo-1.jfif",
         src: "/song/ម្ចាស់បេះដូង.mp3",
       },
       {
         id: "trope-sambath",
         title: "ទ្រព្យសម្បត្តិស្នេហ៍",
-        artist: "Romantic Wedding Song",
+        artistKh: "បទមង្គលការមនោសញ្ចេតនា",
+        artistEn: "Romantic Wedding Song",
+        cover: "/images/gallery/photo-3.jfif",
         src: "/song/ទ្រព្យសម្បត្តិស្នេហ៍.mp3",
       },
     ],
+  },
+  creator: {
+    nameKh: "វណ្ណាត់ (Vannat)",
+    nameEn: "Vannat",
+    roleKh: "អ្នករៀបចំ និងអភិវឌ្ឍន៍ធៀបការអេឡិចត្រូនិក",
+    roleEn: "Digital Wedding Invitation Developer",
+    github: "https://github.com/vannat-24/wedding-invitation",
+    year: "2026",
   },
   gallery: [
     {
