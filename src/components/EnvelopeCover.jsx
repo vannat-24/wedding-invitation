@@ -124,12 +124,9 @@ export default function EnvelopeCover({ couple, onOpen, isOpening }) {
               className="w-full h-auto object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
             />
           </div>
-          <h1 className="font-moul text-[22px] sm:text-[24px] text-[#ffeaa7] drop-shadow-[0_2px_4px_rgba(0,0,0,0.65)] leading-relaxed tracking-wide">
+          <h1 className="font-moul text-[21px] sm:text-[23px] text-[#ffeaa7] drop-shadow-[0_2px_4px_rgba(0,0,0,0.65)] leading-relaxed tracking-wide text-center">
             សិរីមង្គលអាពាហ៍ពិពាហ៍
           </h1>
-          <h2 className="font-moul text-[15px] sm:text-[16px] text-amber-200 drop-shadow-[0_2px_4px_rgba(0,0,0,0.65)] leading-tight">
-            {couple.groom.nameKh} និង {couple.bride.nameKh}
-          </h2>
         </div>
 
         {/* Center: GOLDEN HEART WITH KHMER KBACH & COUPLE NAMES */}

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import GoldenTitleBanner from './GoldenTitleBanner'
 import GoldenHeartKbach from './GoldenHeartKbach'
 
 export default function HeroPhotoScreen({ data, lang, onScrollDown }) {
@@ -34,13 +33,25 @@ export default function HeroPhotoScreen({ data, lang, onScrollDown }) {
       {/* 2. Cinematic Gradient Overlays (Ensures high contrast & readable text) */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/20 to-black/90 pointer-events-none z-10" />
 
-      {/* 3. Top Header: Golden Kbach Crown Frame + Golden Heart placed up high (យករូបនេះដាក់ខាងលើតិច មិនឱ្យបាំងមុខកូនកំលោះ-កូនក្រមុំ) */}
-      <div className="relative z-20 pt-10 px-4 w-full flex flex-col items-center animate-fade-in">
-        <GoldenTitleBanner couple={couple} lang={lang} />
+      {/* 3. Top Header: Golden Kbach Crown Frame + Title + Golden Heart Centered in X */}
+      <div className="relative z-20 pt-7 px-4 w-full flex flex-col items-center animate-fade-in select-none">
+        {/* Top Ornate Khmer Kbach Crown Pediment */}
+        <div className="w-44 sm:w-52 h-auto pointer-events-none mb-0.5">
+          <img
+            src="/images/ornaments/gold-frame-top.png"
+            alt="Golden Kbach Crown"
+            className="w-full h-auto object-contain filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]"
+          />
+        </div>
 
-        {/* Golden Heart moved up high right under title */}
-        <div className="mt-[-6px] transform scale-90 sm:scale-95">
-          <GoldenHeartKbach couple={couple} lang={lang} size="compact" />
+        {/* Auspicious Wedding Union Title */}
+        <h1 className="font-moul text-[18px] sm:text-[21px] text-[#ffeaa7] gold-gradient-shimmer drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] tracking-wide leading-relaxed text-center">
+          {lang === 'km' ? 'សិរីមង្គលអាពាហ៍ពិពាហ៍' : 'Auspicious Wedding Union'}
+        </h1>
+
+        {/* Golden Heart with Khmer Kbach and Couple Names - Perfectly Centered in Direction X & Less Small */}
+        <div className="mt-1 w-full flex justify-center items-center">
+          <GoldenHeartKbach couple={couple} lang={lang} size="hero" />
         </div>
       </div>
 

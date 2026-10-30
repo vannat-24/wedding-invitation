@@ -1,169 +1,165 @@
 export default function GoldenHeartKbach({ couple, lang, size = 'default' }) {
-  const isLarge = size === 'large'
-  const isCompact = size === 'compact'
-
-  const containerSizeClass = isLarge
-    ? 'w-56 h-56'
-    : isCompact
-    ? 'w-42 h-42'
-    : 'w-48 h-48'
+  // Balanced sizing: grand, prestigious, spacious ("less small"), and strictly centered along the X axis
+  const sizeClass =
+    size === 'hero'
+      ? 'w-[270px] h-[270px] sm:w-[300px] sm:h-[300px]'
+      : size === 'large'
+      ? 'w-[260px] h-[260px] sm:w-[290px] sm:h-[290px]'
+      : size === 'compact'
+      ? 'w-[230px] h-[230px] sm:w-[250px] sm:h-[250px]'
+      : 'w-[250px] h-[250px] sm:w-[280px] sm:h-[280px]'
 
   return (
     <div
-      className={`relative flex items-center justify-center filter drop-shadow-[0_8px_25px_rgba(212,175,55,0.45)] ${containerSizeClass}`}
+      className={`relative mx-auto flex items-center justify-center filter drop-shadow-[0_10px_35px_rgba(212,175,55,0.5)] select-none ${sizeClass}`}
+      style={{ marginInline: 'auto' }}
     >
-      {/* Ambient Pulsing Golden Aura */}
+      {/* 1. Ambient Golden Halo Glow */}
       <div className="absolute inset-4 bg-amber-400/25 rounded-full blur-2xl animate-pulse pointer-events-none" />
 
-      {/* Ornate Khmer Kbach Heart SVG */}
+      {/* 2. Ornate 100% Symmetrically Centered Khmer Kbach Heart SVG */}
       <svg
-        viewBox="0 0 200 200"
-        className="w-full h-full text-khmerGold"
+        viewBox="0 0 240 240"
+        className="w-full h-full block mx-auto"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <linearGradient id="heartGoldGrad1" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#fff8db" />
-            <stop offset="25%" stopColor="#ffd700" />
-            <stop offset="60%" stopColor="#c59b27" />
-            <stop offset="100%" stopColor="#7a5212" />
+          {/* Rich 24K Gold Metallic Gradients */}
+          <linearGradient id="symHeartGoldL" x1="0" y1="0" x2="120" y2="240" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#fffdf0" />
+            <stop offset="18%" stopColor="#ffe270" />
+            <stop offset="50%" stopColor="#d4af37" />
+            <stop offset="82%" stopColor="#946618" />
+            <stop offset="100%" stopColor="#54380a" />
           </linearGradient>
 
-          <linearGradient id="heartGoldGrad2" x1="200" y1="0" x2="0" y2="200" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#ffe599" />
-            <stop offset="45%" stopColor="#d4af37" />
-            <stop offset="85%" stopColor="#8f6318" />
-            <stop offset="100%" stopColor="#543708" />
+          <linearGradient id="symHeartGoldR" x1="240" y1="0" x2="120" y2="240" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#fffdf0" />
+            <stop offset="18%" stopColor="#ffe270" />
+            <stop offset="50%" stopColor="#d4af37" />
+            <stop offset="82%" stopColor="#946618" />
+            <stop offset="100%" stopColor="#54380a" />
           </linearGradient>
 
-          <radialGradient id="heartCenterGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-            <stop offset="60%" stopColor="#fef5d6" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="#f3deb0" stopOpacity="0.4" />
+          {/* Translucent Golden Silk Center Glow */}
+          <radialGradient id="symHeartBackdrop" cx="120" cy="115" r="95" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.96" />
+            <stop offset="55%" stopColor="#fffcf2" stopOpacity="0.90" />
+            <stop offset="82%" stopColor="#fcedc7" stopOpacity="0.75" />
+            <stop offset="100%" stopColor="#ecd498" stopOpacity="0.35" />
           </radialGradient>
+
+          {/* REUSABLE HALF-HEART WITH KBACH (Mirrored across x=120 for 100% Horizontal Symmetry) */}
+          <g id="kbach-half-wing">
+            {/* Outer Flame Tendril Lobe (Top Lobes to Tip) */}
+            <path
+              d="M120,44 C104,20 64,18 42,42 C20,66 24,100 42,128 C62,158 100,186 120,206 C110,188 80,164 64,138 C50,116 46,90 58,68 C70,46 100,44 120,60 Z"
+              fill="url(#symHeartGoldL)"
+            />
+            {/* Flame Scroll Accent 1 (ភ្ញីភ្លើង ក្បាលលើ) */}
+            <path
+              d="M42,42 C26,26 44,10 64,16 C50,24 52,36 58,40 C44,38 42,46 42,42 Z"
+              fill="url(#symHeartGoldL)"
+            />
+            {/* Flame Scroll Accent 2 (ភ្ញីភ្លើង ចង្កេះ) */}
+            <path
+              d="M26,78 C10,64 24,44 40,52 C28,60 30,74 42,76 C28,76 26,82 26,78 Z"
+              fill="url(#symHeartGoldL)"
+            />
+            {/* Flame Scroll Accent 3 (ភ្ញីភ្លើង ចំហៀងក្រោម) */}
+            <path
+              d="M34,120 C18,106 32,88 52,96 C38,102 40,116 54,118 C38,120 34,126 34,120 Z"
+              fill="url(#symHeartGoldL)"
+            />
+            {/* Flame Scroll Accent 4 (ភ្ញីភ្លើង ត្រគាកក្រោម) */}
+            <path
+              d="M60,160 C40,148 58,128 78,136 C64,144 66,156 80,158 C64,160 58,166 60,160 Z"
+              fill="url(#symHeartGoldL)"
+            />
+            {/* Inner Filigree Rib Line */}
+            <path
+              d="M120,54 C104,32 68,30 52,50 C36,70 40,98 54,124 C72,154 104,182 120,200"
+              stroke="#fff9db"
+              strokeWidth="1.3"
+              strokeDasharray="2, 2.5"
+              fill="none"
+              opacity="0.88"
+            />
+            {/* Gold Pearl Accents along Margin */}
+            <circle cx="42" cy="42" r="3" fill="#ffffff" stroke="#b8860b" strokeWidth="0.8" />
+            <circle cx="26" cy="78" r="2.8" fill="#ffeaa7" stroke="#b8860b" strokeWidth="0.8" />
+            <circle cx="34" cy="120" r="2.8" fill="#ffeaa7" stroke="#b8860b" strokeWidth="0.8" />
+            <circle cx="60" cy="160" r="2.5" fill="#ffeaa7" stroke="#b8860b" strokeWidth="0.8" />
+          </g>
         </defs>
 
-        {/* Outer Rotating Celestial Sparkle Dots */}
-        <circle cx="100" cy="100" r="92" stroke="#d4af37" strokeWidth="1" strokeDasharray="3, 4" opacity="0.6" />
-        <circle cx="100" cy="8" r="3.5" fill="#ffd700" />
-        <circle cx="100" cy="192" r="3.5" fill="#ffd700" />
-        <circle cx="8" cy="100" r="3.5" fill="#ffd700" />
-        <circle cx="192" cy="100" r="3.5" fill="#ffd700" />
+        {/* Outer Circular Celestial Orbit Ring */}
+        <circle cx="120" cy="120" r="114" stroke="#d4af37" strokeWidth="1" strokeDasharray="3, 4" opacity="0.65" />
+        <circle cx="120" cy="6" r="4" fill="#ffd700" stroke="#8f6318" strokeWidth="1" />
+        <circle cx="120" cy="234" r="4" fill="#ffd700" stroke="#8f6318" strokeWidth="1" />
+        <circle cx="6" cy="120" r="4" fill="#ffd700" stroke="#8f6318" strokeWidth="1" />
+        <circle cx="234" cy="120" r="4" fill="#ffd700" stroke="#8f6318" strokeWidth="1" />
 
-        {/* Soft Translucent Heart Center Backdrop */}
+        {/* Unified Translucent Backdrop Silk (Symmetric across x=120) */}
         <path
-          d="M100,42 C85,18 42,18 28,48 C14,78 40,118 100,165 C160,118 186,78 172,48 C158,18 115,18 100,42 Z"
-          fill="url(#heartCenterGlow)"
-          className="backdrop-blur-sm"
-          opacity="0.92"
+          d="M120,50 C104,22 52,22 36,56 C20,90 50,140 120,196 C190,140 220,90 204,56 C188,22 136,22 120,50 Z"
+          fill="url(#symHeartBackdrop)"
         />
 
-        {/* LEFT KBACH FLAME HEART WING */}
-        <path
-          d="M100,42 C85,18 44,18 30,48 C18,74 42,112 100,165 C88,145 62,125 48,102 C36,82 40,58 58,46 C74,36 90,44 100,42 Z"
-          fill="url(#heartGoldGrad1)"
-        />
-        {/* Left Outer Kbach Flame Spirals (ភ្ញីភ្លើង) */}
-        <path
-          d="M30,48 C18,36 32,22 45,26 C36,32 38,42 44,46 C34,44 32,50 30,48 Z"
-          fill="url(#heartGoldGrad1)"
-        />
-        <path
-          d="M20,72 C8,62 18,48 30,52 C22,58 24,68 32,70 C22,70 20,74 20,72 Z"
-          fill="url(#heartGoldGrad1)"
-        />
-        <path
-          d="M28,105 C14,95 24,80 38,84 C28,90 30,100 40,102 C28,104 26,108 28,105 Z"
-          fill="url(#heartGoldGrad1)"
-        />
-        <path
-          d="M48,135 C32,126 44,110 58,114 C48,120 50,130 60,132 C48,134 46,138 48,135 Z"
-          fill="url(#heartGoldGrad1)"
-        />
+        {/* LEFT WING (Original) */}
+        <use href="#kbach-half-wing" />
 
-        {/* RIGHT KBACH FLAME HEART WING (Symmetric) */}
-        <path
-          d="M100,42 C115,18 156,18 170,48 C182,74 158,112 100,165 C112,145 138,125 152,102 C164,82 160,58 142,46 C126,36 110,44 100,42 Z"
-          fill="url(#heartGoldGrad2)"
-        />
-        {/* Right Outer Kbach Flame Spirals */}
-        <path
-          d="M170,48 C182,36 168,22 155,26 C164,32 162,42 156,46 C166,44 168,50 170,48 Z"
-          fill="url(#heartGoldGrad2)"
-        />
-        <path
-          d="M180,72 C192,62 182,48 170,52 C178,58 176,68 168,70 C178,70 180,74 180,72 Z"
-          fill="url(#heartGoldGrad2)"
-        />
-        <path
-          d="M172,105 C186,95 176,80 162,84 C172,90 170,100 160,102 C172,104 174,108 172,105 Z"
-          fill="url(#heartGoldGrad2)"
-        />
-        <path
-          d="M152,135 C168,126 156,110 142,114 C152,120 150,130 140,132 C152,134 154,138 152,135 Z"
-          fill="url(#heartGoldGrad2)"
-        />
+        {/* RIGHT WING (Mathematically Mirrored across x=120 for 100% Horizontal Symmetry) */}
+        <g transform="translate(240, 0) scale(-1, 1)">
+          <use href="#kbach-half-wing" fill="url(#symHeartGoldR)" />
+        </g>
 
-        {/* Central Crown Finial (កំពូលក្បាច់ចុងលើ) */}
+        {/* Top Central Crown Finial (កំពូលចុងលើ - Centered at x=120) */}
         <path
-          d="M100,24 C104,32 108,36 100,44 C92,36 96,32 100,24 Z"
+          d="M120,20 C125,30 130,34 120,44 C110,34 115,30 120,20 Z"
           fill="#ffd700"
           stroke="#8f6318"
-          strokeWidth="1"
+          strokeWidth="1.2"
         />
-        <circle cx="100" cy="20" r="3" fill="#ffffff" stroke="#b88628" strokeWidth="1" />
+        <circle cx="120" cy="16" r="3.5" fill="#ffffff" stroke="#b88628" strokeWidth="1" />
 
-        {/* Bottom Lotus Finial (ក្បាច់ចុងក្រោម) */}
+        {/* Bottom Central Lotus Finial (ក្បាច់ចុងក្រោម - Centered at x=120) */}
         <path
-          d="M100,165 C96,175 92,180 100,188 C108,180 104,175 100,165 Z"
+          d="M120,202 C115,214 110,218 120,228 C130,218 125,214 120,202 Z"
           fill="#ffd700"
           stroke="#8f6318"
-          strokeWidth="1"
+          strokeWidth="1.2"
         />
-        <circle cx="100" cy="190" r="3" fill="#ffffff" stroke="#b88628" strokeWidth="1" />
-
-        {/* Delicate Inner Golden Heart Outline */}
-        <path
-          d="M100,48 C88,28 52,28 40,54 C28,78 50,112 100,154 C150,112 172,78 160,54 C148,28 112,28 100,48 Z"
-          stroke="#c59b27"
-          strokeWidth="1.5"
-          strokeDasharray="2, 2"
-        />
+        <circle cx="120" cy="230" r="3.5" fill="#ffffff" stroke="#b88628" strokeWidth="1" />
       </svg>
 
-      {/* CENTER COUPLE NAMES & MONOGRAM (ស្ថិតនៅចំកណ្តាលរង្វង់បេះដូង) */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-3 pt-1 select-none pointer-events-none">
-        {/* Monogram Initials */}
-        <span
-          className={`font-moul gold-gradient-text tracking-tighter leading-none drop-shadow-sm ${
-            isCompact ? 'text-2xl' : 'text-3xl'
-          }`}
-        >
-          {couple.groom.initialKh}
-          <span className={`text-amber-700/85 -ml-0.5 ${isCompact ? 'text-xl' : 'text-2xl'}`}>
+      {/* 3. CENTER CONTENT (Strictly Centered horizontally along direction X and vertically in direction Y) */}
+      <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 pointer-events-none select-none">
+        {/* Royal Monogram Initials */}
+        <div className="flex items-center justify-center leading-none">
+          <span className="font-moul text-[26px] sm:text-[30px] gold-gradient-text tracking-normal drop-shadow-sm">
+            {couple.groom.initialKh}
+          </span>
+          <span className="font-moul text-[22px] sm:text-[26px] text-amber-700/90 -ml-1">
             {couple.bride.initialKh}
           </span>
-        </span>
+        </div>
 
-        {/* Small Golden Divider Line */}
-        <div className="w-10 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent my-1 opacity-70" />
+        {/* Golden Ornamental Divider */}
+        <div className="flex items-center justify-center space-x-2 my-1.5 opacity-85">
+          <span className="h-[1.5px] w-8 bg-gradient-to-r from-transparent via-amber-500 to-amber-700" />
+          <span className="text-[11px] text-amber-700">❦</span>
+          <span className="h-[1.5px] w-8 bg-gradient-to-l from-transparent via-amber-500 to-amber-700" />
+        </div>
 
-        {/* Groom & Bride Paired Names in Center */}
-        <div className="space-y-0.5 max-w-[130px]">
-          <p
-            className={`font-moul text-[#5c3e0e] leading-tight truncate ${
-              isCompact ? 'text-[10px]' : 'text-[11px]'
-            }`}
-          >
+        {/* Paired Groom & Bride Names - Roomy, Beautiful & Legible */}
+        <div className="space-y-1 w-full max-w-[190px] text-center">
+          <p className="font-moul text-[12.5px] sm:text-[14px] text-[#54380a] leading-tight drop-shadow-xs truncate">
             {lang === 'km' ? couple.groom.nameKh : couple.groom.nameEn}
           </p>
-          <span className="text-[9px] text-amber-700 font-bold block leading-none">&amp;</span>
-          <p
-            className={`font-moul text-[#5c3e0e] leading-tight truncate ${
-              isCompact ? 'text-[10px]' : 'text-[11px]'
-            }`}
-          >
+          <span className="text-[11px] text-amber-700 font-bold block leading-none">&amp;</span>
+          <p className="font-moul text-[12.5px] sm:text-[14px] text-[#54380a] leading-tight drop-shadow-xs truncate">
             {lang === 'km' ? couple.bride.nameKh : couple.bride.nameEn}
           </p>
         </div>
@@ -171,4 +167,3 @@ export default function GoldenHeartKbach({ couple, lang, size = 'default' }) {
     </div>
   )
 }
-
