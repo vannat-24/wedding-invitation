@@ -64,10 +64,6 @@ export default function GallerySection({ gallery, lang, onLightboxChange }) {
     touchStartX.current = null
   }
 
-  const currentPhotoIndex = selectedPhoto
-    ? gallery.findIndex((p) => p.id === selectedPhoto.id)
-    : -1
-
   return (
     <section className="scroll-mt-6" id="gallery-section">
       <div className="text-center mb-3">
@@ -120,99 +116,63 @@ export default function GallerySection({ gallery, lang, onLightboxChange }) {
           : 'Tap any photo to view full size'}
       </p>
 
-      {/* Lightbox Modal (Centered with buttons framed directly around the photo) */}
+      {/* Lightbox Modal (Full-screen, minimal margin, left/right buttons attached directly to image edges) */}
       {selectedPhoto && (
         <div
-          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-2 sm:p-4 backdrop-blur-md animate-fade-in select-none"
+          className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-center p-2 sm:p-3 backdrop-blur-md animate-fade-in select-none"
           onClick={closeLightbox}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {/* Centered Mobile/Photo Frame: Keeps Cross, Left, Right & Counter attached right near the photo! */}
+          {/* Top-Right Close Button ("Cross X") */}
+          <button
+            onClick={closeLightbox}
+            className="absolute top-3 right-3 sm:top-5 sm:right-5 z-50 w-11 h-11 rounded-full bg-black/65 hover:bg-black/90 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-xl shadow-[0_4px_25px_rgba(0,0,0,0.85)] backdrop-blur-md transition-all cursor-pointer group"
+            title={lang === 'km' ? 'បិទ' : 'Close'}
+            aria-label="Close photo"
+          >
+            <i className="fa-solid fa-xmark group-hover:rotate-90 transition-transform duration-200"></i>
+          </button>
+
+          {/* Centered Large Photo Container (Fills screen with slight margin) */}
           <div
-            className="relative w-full max-w-[430px] sm:max-w-[460px] h-full max-h-[920px] flex flex-col justify-between items-center py-4 px-2 select-none"
+            className="relative w-full max-w-[430px] sm:max-w-[480px] flex flex-col items-center justify-center my-auto px-1 sm:px-2"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Top Bar with Counter & Close Button (Directly above the photo) */}
-            <div className="w-full flex justify-between items-center px-1 z-50">
-              {/* Photo Counter Badge */}
-              <div className="bg-black/75 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-amber-400/60 shadow-xl flex items-center space-x-1.5 text-amber-200">
-                <i className="fa-regular fa-image text-xs text-amber-300"></i>
-                <span className="text-xs font-bold font-kantumruy">
-                  {currentPhotoIndex + 1} / {gallery.length}
-                </span>
-              </div>
+            {/* Image Wrapper with Left & Right Buttons attached right at the photo edges */}
+            <div className="relative w-full flex items-center justify-center">
+              {/* Photo Image - Large, filling the screen with small margin */}
+              <img
+                src={selectedPhoto.full}
+                alt={lang === 'km' ? selectedPhoto.captionKh : selectedPhoto.captionEn}
+                className="w-full max-h-[80vh] sm:max-h-[84vh] object-contain rounded-2xl border-2 border-amber-400/90 shadow-[0_12px_45px_rgba(0,0,0,0.95)] bg-neutral-900/60"
+              />
 
-              {/* Close Button ("Cross X") with generous margins and gold-rimmed styling */}
-              <button
-                onClick={closeLightbox}
-                className="w-11 h-11 rounded-full bg-black/80 hover:bg-black/95 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-xl shadow-[0_4px_25px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all cursor-pointer group"
-                title={lang === 'km' ? 'បិទ' : 'Close'}
-                aria-label="Close photo"
-              >
-                <i className="fa-solid fa-xmark group-hover:rotate-90 transition-transform duration-200"></i>
-              </button>
-            </div>
-
-            {/* Middle Section: Left Arrow + Image + Right Arrow */}
-            <div className="relative w-full flex-1 flex items-center justify-center my-auto">
-              {/* Left Arrow Navigation Button (Attached to left flank of photo container) */}
+              {/* Left Arrow Button (Right at the left edge of the image) */}
               <button
                 onClick={(e) => navigatePhoto(-1, e)}
-                className="absolute left-0 sm:left-1 top-1/2 -translate-y-1/2 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/80 hover:bg-black/95 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-lg shadow-[0_4px_25px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all cursor-pointer group"
+                className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/65 hover:bg-black/90 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-lg shadow-[0_4px_20px_rgba(0,0,0,0.85)] backdrop-blur-md transition-all cursor-pointer group"
                 title={lang === 'km' ? 'រូបភាពមុន' : 'Previous'}
                 aria-label="Previous photo"
               >
                 <i className="fa-solid fa-chevron-left group-hover:-translate-x-0.5 transition-transform duration-200"></i>
               </button>
 
-              {/* Right Arrow Navigation Button (Attached to right flank of photo container) */}
+              {/* Right Arrow Button (Right at the right edge of the image) */}
               <button
                 onClick={(e) => navigatePhoto(1, e)}
-                className="absolute right-0 sm:right-1 top-1/2 -translate-y-1/2 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/80 hover:bg-black/95 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-lg shadow-[0_4px_25px_rgba(0,0,0,0.8)] backdrop-blur-md transition-all cursor-pointer group"
+                className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/65 hover:bg-black/90 active:scale-90 border-2 border-amber-400/80 text-amber-200 hover:text-white flex items-center justify-center text-lg shadow-[0_4px_20px_rgba(0,0,0,0.85)] backdrop-blur-md transition-all cursor-pointer group"
                 title={lang === 'km' ? 'រូបភាពបន្ទាប់' : 'Next'}
                 aria-label="Next photo"
               >
                 <i className="fa-solid fa-chevron-right group-hover:translate-x-0.5 transition-transform duration-200"></i>
               </button>
-
-              {/* Photo & Caption Container with dedicated side margins so buttons never overlap image */}
-              <div className="w-full px-12 sm:px-14 flex flex-col items-center">
-                <img
-                  src={selectedPhoto.full}
-                  alt={lang === 'km' ? selectedPhoto.captionKh : selectedPhoto.captionEn}
-                  className="w-full max-h-[64vh] sm:max-h-[68vh] object-contain rounded-2xl border-2 border-amber-400/90 shadow-[0_12px_45px_rgba(0,0,0,0.95)] bg-neutral-900/60"
-                />
-                <p className="text-amber-100 text-xs sm:text-sm font-kantumruy font-medium mt-3 text-center bg-black/75 px-4 py-1.5 rounded-full border border-amber-400/40 shadow-lg max-w-[95%] truncate">
-                  {lang === 'km' ? selectedPhoto.captionKh : selectedPhoto.captionEn}
-                </p>
-              </div>
             </div>
 
-            {/* Bottom Quick Navigation Toolbar (Directly under the photo) */}
-            <div className="w-full flex justify-center items-center pb-2 z-50">
-              <div className="flex items-center space-x-3 bg-black/75 backdrop-blur-md px-4 py-1.5 rounded-full border border-amber-400/50 shadow-lg">
-                <button
-                  onClick={(e) => navigatePhoto(-1, e)}
-                  className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-amber-200 text-xs font-kantumruy flex items-center space-x-1.5 transition cursor-pointer"
-                >
-                  <i className="fa-solid fa-arrow-left text-[10px]"></i>
-                  <span>{lang === 'km' ? 'ថយក្រោយ' : 'Prev'}</span>
-                </button>
-
-                <span className="text-xs text-amber-300 font-bold font-kantumruy">
-                  {currentPhotoIndex + 1} / {gallery.length}
-                </span>
-
-                <button
-                  onClick={(e) => navigatePhoto(1, e)}
-                  className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-amber-200 text-xs font-kantumruy flex items-center space-x-1.5 transition cursor-pointer"
-                >
-                  <span>{lang === 'km' ? 'បន្ទាប់' : 'Next'}</span>
-                  <i className="fa-solid fa-arrow-right text-[10px]"></i>
-                </button>
-              </div>
-            </div>
+            {/* Photo Caption */}
+            <p className="text-amber-100 text-xs sm:text-sm font-kantumruy font-medium mt-2.5 text-center bg-black/70 px-4 py-1.5 rounded-full border border-amber-400/40 shadow-lg max-w-[92%] truncate">
+              {lang === 'km' ? selectedPhoto.captionKh : selectedPhoto.captionEn}
+            </p>
           </div>
         </div>
       )}
